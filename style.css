@@ -47,7 +47,8 @@ html {
 }
 
 .active {
-  background-color: green;
+  background-color: green !important;
+  border-radius: 50%;
 }
 
 .backspace,
@@ -87,5 +88,5 @@ html {
 .arrow-down,
 .arrow-right,
 .win {
-  background-color: #222222;
+  background: #222222;
 }

@@ -119,9 +119,20 @@ document.addEventListener('keydown', printKeysByKeyboard)
 function printKeysByKeyboard(event) {
   if (
     !event.key ===
-    ['ArrowLeft', 'ArrowRight', 'Delete', 'Backspace', 'Enter', 'Shift', 'Alt', 'Control', 'CapsLock', 'Tab'].includes(
-      event.key
-    )
+    [
+      'ArrowLeft',
+      'ArrowRight',
+      'ArrowUp',
+      'ArrowDown',
+      'Delete',
+      'Backspace',
+      'Enter',
+      'Shift',
+      'Alt',
+      'Control',
+      'CapsLock',
+      'Tab',
+    ].includes(event.key)
   ) {
     textArea.value += event.key
   }
@@ -161,8 +172,8 @@ function showButton(event) {
     if (element.getAttribute('data-code') === event.code) {
       element.classList.add('active')
     }
-    setTimeout(() => {
+    document.addEventListener('keyup', () => {
       element.classList.remove('active')
-    }, 200)
+    })
   })
 }
