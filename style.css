@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 10px;
+}
+
+.textarea {
+  display: block;
+  width: 700px;
+  height: 200px;
+  margin: 10px auto 10px;
+  padding: 10px;
+  font-size: 18px;
+  line-height: 1.15;
+  color: #444444;
+}
+
+.keyboard {
+  width: 720px;
+  margin: 0 auto;
+  padding: 5px;
+  background: #888888;
+  border: 3px solid #222222;
+  border-radius: 5px;
+  font-family: 'Trebuchet MS', 'Helvetica', sans-serif;
+}
+
+.key {
+  width: 40px;
+  height: 40px;
+  margin: 0 0 8px 6px;
+  font-weight: 500;
+  line-height: 40px;
+  text-align: center;
+  color: #ffffff;
+  background: #444444;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: border-radius 0.3s, background-color 0.3s;
+}
+
+.backspace,
+.capslock,
+.shift-left {
+  width: 100px;
+}
+
+.enter,
+.shift-right {
+  width: 86px;
+}
+
+.tab {
+  width: 50px;
+}
+
+.del {
+  width: 44px;
+}
+
+.space {
+  width: 330px;
+}
+
+.backspace,
+.capslock,
+.shift-left,
+.enter,
+.shift-right,
+.tab,
+.del,
+.ctrl,
+.alt,
+.arrow-up,
+.arrow-left,
+.arrow-down,
+.arrow-right,
+.win {
+  background-color: #222222;
+}
