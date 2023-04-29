@@ -48,17 +48,6 @@ document.body.appendChild(keyboard)
 const keysContainer = document.querySelector('.keyboard__container')
 keysContainer.addEventListener('click', handleKeys)
 
-// Add symbos by keyboard
-document.addEventListener('keydown', printKeysByKeyboard)
-
-function printKeysByKeyboard(event) {
-  if (
-    !event.key === ['Delete', 'Backspace', 'Enter', 'Shift', 'Alt', 'Control', 'CapsLock', 'Tab'].includes(event.key)
-  ) {
-    textArea.value += event.key
-  }
-}
-
 // Disable standard input event handling
 textArea.addEventListener('keydown', function (event) {
   if (event.type === 'keydown') {
@@ -84,14 +73,43 @@ function lineBreak(event) {
   }
 }
 
-// Add animation for the virtual keyboard when pressing on the physical one
+// Add handle for the Space
+document.addEventListener('keydown', addSpace)
+
+function addSpace(event) {
+  if (event.code === 'Space') {
+    textArea.value += ' '
+  }
+}
+
+// Add symbos by keyboard and animation for the virtual keyboard when pressing on the physical one
 document.addEventListener('keydown', showButton)
 
 function showButton(event) {
   const keyBoard = document.querySelectorAll('.keyboard__container .key')
   keyBoard.forEach(function (element) {
-    if (element.getAttribute('data-code') === event.code) {
+    const key = element.getAttribute('data-code')
+    if (
+      key === event.code &&
+      !key ===
+        [
+          'Delete',
+          'Backspace',
+          'Enter',
+          'ShiftLeft',
+          'ShiftRight',
+          'AltLeft',
+          'AltRight',
+          'ControlLeft',
+          'ControlRigth',
+          'CapsLock',
+          'Tab',
+          'Space',
+        ].includes(key)
+    ) {
       element.classList.add('active')
+      console.log()
+      textArea.value += element.innerText
     }
     document.addEventListener('keyup', () => {
       element.classList.remove('active')
@@ -99,7 +117,7 @@ function showButton(event) {
   })
 }
 
-//Change tht language
+//Change the language
 document.addEventListener('keydown', changeLang)
 
 let control = null
