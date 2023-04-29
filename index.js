@@ -1,3 +1,5 @@
+import { keysEn, keysRu } from './language.js'
+
 const textArea = document.createElement('textarea')
 textArea.classList.add('textarea')
 textArea.setAttribute('rows', '5')
@@ -9,75 +11,8 @@ keyboard.classList.add('keyboard')
 const wrapper = document.createElement('div')
 wrapper.classList.add('wrapper')
 
-const keys = [
-  { key: '`', shift: '~', code: 'Backquote' },
-  { key: '1', shift: '!', code: 'Digit1' },
-  { key: '2', shift: '@', code: 'Digit2' },
-  { key: '3', shift: '#', code: 'Digit3' },
-  { key: '4', shift: '$', code: 'Digit4' },
-  { key: '5', shift: '%', code: 'Digit5' },
-  { key: '6', shift: '^', code: 'Digit6' },
-  { key: '7', shift: '&', code: 'Digit7' },
-  { key: '8', shift: '*', code: 'Digit8' },
-  { key: '9', shift: '(', code: 'Digit9' },
-  { key: '0', shift: ')', code: 'Digit0' },
-  { key: '-', shift: '_', code: 'Minus' },
-  { key: '=', shift: '+', code: 'Equal' },
-  { key: 'Backspace', code: 'Backspace', class: 'backspace' },
-  { key: 'Tab', code: 'Tab', class: 'tab' },
-  { key: 'q', shift: 'Q', code: 'KeyQ' },
-  { key: 'w', shift: 'W', code: 'KeyW' },
-  { key: 'e', shift: 'E', code: 'KeyE' },
-  { key: 'r', shift: 'R', code: 'KeyR' },
-  { key: 't', shift: 'T', code: 'KeyT' },
-  { key: 'y', shift: 'Y', code: 'KeyY' },
-  { key: 'u', shift: 'U', code: 'KeyU' },
-  { key: 'i', shift: 'I', code: 'KeyI' },
-  { key: 'o', shift: 'O', code: 'KeyO' },
-  { key: 'p', shift: 'P', code: 'KeyP' },
-  { key: '[', shift: '{', code: 'BracketLeft' },
-  { key: ']', shift: '}', code: 'BracketRight' },
-  { key: '\\', shift: '|', code: 'Backslash' },
-  { key: 'Del', code: 'Delete', class: 'del' },
-  { key: 'CapsLock', code: 'CapsLock', class: 'capslock' },
-  { key: 'a', shift: 'A', code: 'KeyA' },
-  { key: 's', shift: 'S', code: 'KeyS' },
-  { key: 'd', shift: 'D', code: 'KeyD' },
-  { key: 'f', shift: 'F', code: 'KeyF' },
-  { key: 'g', shift: 'G', code: 'KeyG' },
-  { key: 'h', shift: 'H', code: 'KeyH' },
-  { key: 'j', shift: 'J', code: 'KeyJ' },
-  { key: 'k', shift: 'K', code: 'KeyK' },
-  { key: 'l', shift: 'L', code: 'KeyL' },
-  { key: ';', shift: ':', code: 'Semicolon' },
-  { key: "'", shift: '"', code: 'Quote' },
-  { key: 'Enter', code: 'Enter', class: 'enter' },
-  { key: 'Shift', code: 'ShiftLeft', location: 1, class: 'shift-left' },
-  { key: 'z', shift: 'Z', code: 'KeyZ' },
-  { key: 'x', shift: 'X', code: 'KeyX' },
-  { key: 'c', shift: 'C', code: 'KeyC' },
-  { key: 'v', shift: 'V', code: 'KeyV' },
-  { key: 'b', shift: 'B', code: 'KeyB' },
-  { key: 'n', shift: 'N', code: 'KeyN' },
-  { key: 'm', shift: 'M', code: 'KeyM' },
-  { key: ',', shift: '<', code: 'Comma' },
-  { key: '.', shift: '>', code: 'Period' },
-  { key: '/', shift: '?', code: 'Slash' },
-  { key: '▲', code: 'ArrowUp', class: 'arrow-up' },
-  { key: 'Shift', code: 'ShiftRight', location: 2, class: 'shift-right' },
-  { key: 'Ctrl', code: 'ControlLeft', class: 'ctrl' },
-  { key: 'Win', code: 'MetaLeft', class: 'win' },
-  { key: 'Alt', code: 'AltLeft', location: 1, class: 'alt' },
-  { key: 'Space', code: 'Space', class: 'space' },
-  { key: 'Alt', code: 'AltRight', location: 2, class: 'alt' },
-  { key: '◄', code: 'ArrowLeft', class: 'arrow-left' },
-  { key: '▼', code: 'ArrowDown', class: 'arrow-down' },
-  { key: '►', code: 'ArrowRight', class: 'arrow-right' },
-  { key: 'Ctrl', code: 'ControlRight', location: 'rigt', class: 'ctrl' },
-]
-
 // Create a function to create buttons on the keyboard
-function createKeys() {
+function createKeys(keys) {
   const keysContainer = document.createElement('div')
   keysContainer.classList.add('keyboard__container')
   for (let i = 0; i < keys.length; i++) {
@@ -105,7 +40,7 @@ function handleKeys(e) {
 }
 
 // Add the keyboard for the page
-keyboard.appendChild(createKeys())
+keyboard.appendChild(createKeys(keysEn))
 document.body.appendChild(textArea)
 document.body.appendChild(keyboard)
 
@@ -118,21 +53,7 @@ document.addEventListener('keydown', printKeysByKeyboard)
 
 function printKeysByKeyboard(event) {
   if (
-    !event.key ===
-    [
-      'ArrowLeft',
-      'ArrowRight',
-      'ArrowUp',
-      'ArrowDown',
-      'Delete',
-      'Backspace',
-      'Enter',
-      'Shift',
-      'Alt',
-      'Control',
-      'CapsLock',
-      'Tab',
-    ].includes(event.key)
+    !event.key === ['Delete', 'Backspace', 'Enter', 'Shift', 'Alt', 'Control', 'CapsLock', 'Tab'].includes(event.key)
   ) {
     textArea.value += event.key
   }
@@ -176,4 +97,31 @@ function showButton(event) {
       element.classList.remove('active')
     })
   })
+}
+
+//Change tht language
+document.addEventListener('keydown', changeLang)
+
+let control = null
+let alt = null
+let language = 'En'
+
+function changeLang(event) {
+  if (event.key === 'Control') {
+    control = event.key
+  } else if (event.key === 'Alt' && control) {
+    alt = event.key
+    keyboard.innerHTML = ''
+    if (language === 'En') {
+      keyboard.appendChild(createKeys(keysRu))
+      control = null
+      alt = null
+      language = 'Ru'
+    } else {
+      keyboard.appendChild(createKeys(keysEn))
+      control = null
+      alt = null
+      language = 'En'
+    }
+  }
 }
