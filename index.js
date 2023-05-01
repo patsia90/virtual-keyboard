@@ -1,4 +1,6 @@
 import { keysEn, keysRu } from './language.js'
+
+// Create elements of body
 const title = document.createElement('h1')
 title.classList.add('title')
 title.textContent = 'RSS Виртуальная клавиатура'
@@ -6,17 +8,14 @@ const textArea = document.createElement('textarea')
 textArea.classList.add('textarea')
 textArea.setAttribute('rows', '5')
 textArea.setAttribute('cols', '50')
-
 const keyboard = document.createElement('div')
 keyboard.classList.add('keyboard')
 const text = document.createElement('p')
 text.classList.add('text')
 text.textContent = 'Клавиатура создана в операционной системе Windows  '
-
 const change = document.createElement('p')
 change.classList.add('text')
 change.textContent = 'Для переключения языка комбинация: левый ctrl-alt'
-
 const wrapper = document.createElement('div')
 wrapper.classList.add('wrapper')
 
@@ -41,18 +40,6 @@ function createKeys(keys) {
   }
   return keysContainer
 }
-
-// Create a function to handle pressing buttons
-
-// function handleKeys(e) {
-//   const key = e.target.dataset.code
-//   const shift = e.shiftKey
-//   if (key && !specialKeysCode.includes(key)) {
-//     const event = new KeyboardEvent('keydown', { code: shift ? e.target.dataset.shift : e.target.textContent })
-//     document.dispatchEvent(event)
-//     textArea.value += event.code
-//   }
-// }
 
 // Create a function print text by presed keyboard
 document.addEventListener('keydown', (e) => {
@@ -99,7 +86,6 @@ document.addEventListener('keyup', (e) => {
 })
 
 // Add the keyboard for the page
-keyboard.appendChild(createKeys(keysEn))
 const elements = [title, textArea, keyboard, text, change]
 elements.forEach((element) => {
   document.body.appendChild(element)
@@ -169,7 +155,6 @@ document.addEventListener('keydown', changeLang)
 
 let isCtrlPressed = false
 let isAltPressed = false
-let language = 'En'
 
 function changeLang(event) {
   if (event.code === 'ControlLeft') {
@@ -182,14 +167,37 @@ function changeLang(event) {
 
   if (isCtrlPressed && isAltPressed) {
     keyboard.innerHTML = ''
-    if (language === 'En') {
+    if (lang === 'en') {
       keyboard.appendChild(createKeys(keysRu))
-      language = 'Ru'
+      lang = 'ru'
     } else {
       keyboard.appendChild(createKeys(keysEn))
-      language = 'En'
+      lang = 'en'
     }
   }
+  localStorage.setItem('language', lang)
+}
+
+// Create remember language
+const LANG_KEY = 'language'
+const DEFAULT_LANG = 'en'
+
+function setLanguage(lang) {
+  localStorage.setItem(LANG_KEY, lang)
+}
+
+function getLanguage() {
+  return localStorage.getItem(LANG_KEY) || DEFAULT_LANG
+}
+if (!localStorage.getItem(LANG_KEY)) {
+  setLanguage(DEFAULT_LANG)
+}
+let lang = getLanguage()
+
+if (lang === 'ru') {
+  keyboard.appendChild(createKeys(keysRu))
+} else {
+  keyboard.appendChild(createKeys(keysEn))
 }
 
 // Add handle for Ctrl and Alt return false
