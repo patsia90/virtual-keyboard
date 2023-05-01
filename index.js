@@ -35,24 +35,37 @@ function createKeys(keys) {
 
 // Create a function to handle pressing buttons
 
-function handleKeys(e) {
-  const key = e.target.dataset.code
-  const shift = e.shiftKey
-  if (key && !specialKeysCode.includes(key)) {
-    const event = new KeyboardEvent('keydown', { code: shift ? e.target.dataset.shift : e.target.textContent })
-    document.dispatchEvent(event)
-    textArea.value += event.code
-  }
-}
+// function handleKeys(e) {
+//   const key = e.target.dataset.code
+//   const shift = e.shiftKey
+//   if (key && !specialKeysCode.includes(key)) {
+//     const event = new KeyboardEvent('keydown', { code: shift ? e.target.dataset.shift : e.target.textContent })
+//     document.dispatchEvent(event)
+//     textArea.value += event.code
+//   }
+// }
 
 // Create a function print text by presed keyboard
-document.addEventListener('keydown', printBykeyBoard)
-function printBykeyBoard(e) {
+document.addEventListener('keydown', (e) => {
   const key = e.code
   const shift = e.shiftKey
   const capslock = e.getModifierState('CapsLock')
+  printBykeyBoard(key, shift, capslock)
+})
+
+//Add handle for board visual
+document.addEventListener('click', (e) => {
+  const key = e.target.dataset.code
+  const shift = e.shiftKey
+  const capslock = e.getModifierState('CapsLock')
+  printBykeyBoard(key, shift, capslock)
+  setTimeout(() => {
+    e.target.classList.remove('active')
+  }, 200)
+})
+
+function printBykeyBoard(key, shift, capslock) {
   const virtualKey = document.querySelector(`[data-code="${key}"]`)
-  virtualKey.classList.add('active')
   let code
   if (virtualKey && !specialKeysCode.includes(virtualKey.dataset.code)) {
     if (capslock && !shift && virtualKey.textContent.match(/[a-zA-Zа-яА-Я]/)) {
@@ -64,6 +77,7 @@ function printBykeyBoard(e) {
     }
     const event = new KeyboardEvent('keydown', { code })
     document.dispatchEvent(event)
+    virtualKey.classList.add('active')
     textArea.value += event.code
   }
 }
@@ -79,10 +93,6 @@ document.addEventListener('keyup', (e) => {
 keyboard.appendChild(createKeys(keysEn))
 document.body.appendChild(textArea)
 document.body.appendChild(keyboard)
-
-// Add handles for buttons
-const keysContainer = document.querySelector('.keyboard__container')
-keysContainer.addEventListener('click', handleKeys)
 
 // Disable standard input event handling
 textArea.addEventListener('keydown', function (event) {
