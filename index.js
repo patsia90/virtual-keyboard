@@ -1,5 +1,7 @@
 import { keysEn, keysRu } from './language.js'
-
+const title = document.createElement('h1')
+title.classList.add('title')
+title.textContent = 'RSS Виртуальная клавиатура'
 const textArea = document.createElement('textarea')
 textArea.classList.add('textarea')
 textArea.setAttribute('rows', '5')
@@ -7,6 +9,13 @@ textArea.setAttribute('cols', '50')
 
 const keyboard = document.createElement('div')
 keyboard.classList.add('keyboard')
+const text = document.createElement('p')
+text.classList.add('text')
+text.textContent = 'Клавиатура создана в операционной системе Windows  '
+
+const change = document.createElement('p')
+change.classList.add('text')
+change.textContent = 'Для переключения языка комбинация: левый ctrl-alt'
 
 const wrapper = document.createElement('div')
 wrapper.classList.add('wrapper')
@@ -91,8 +100,10 @@ document.addEventListener('keyup', (e) => {
 
 // Add the keyboard for the page
 keyboard.appendChild(createKeys(keysEn))
-document.body.appendChild(textArea)
-document.body.appendChild(keyboard)
+const elements = [title, textArea, keyboard, text, change]
+elements.forEach((element) => {
+  document.body.appendChild(element)
+})
 
 // Disable standard input event handling
 textArea.addEventListener('keydown', function (event) {

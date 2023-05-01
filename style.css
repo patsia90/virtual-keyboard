@@ -2,11 +2,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Trebuchet MS', 'Helvetica', sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
   font-size: 10px;
+}
+.title {
+  margin: 10px auto;
+  text-align: center;
+  font-size: 30px;
+  color: rgba(101, 134, 177, 0.8);
+  -webkit-text-stroke: 1px rgba(114, 177, 101, 0.8);
+  -webkit-text-fill-color: rgba(101, 134, 177, 0.8);
 }
 
 .textarea {
@@ -27,7 +36,6 @@ html {
   background: #888888;
   border: 3px solid #222222;
   border-radius: 5px;
-  font-family: 'Trebuchet MS', 'Helvetica', sans-serif;
 }
 
 .key {
@@ -44,6 +52,12 @@ html {
   cursor: pointer;
   user-select: none;
   transition: border-radius 0.3s, background-color 0.3s;
+}
+
+.text {
+  font-size: 18px;
+  margin: 10px auto;
+  text-align: center;
 }
 
 .active {
