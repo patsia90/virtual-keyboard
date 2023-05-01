@@ -18,7 +18,11 @@ function createKeys(keys) {
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i]
     const button = document.createElement('button')
-    button.classList.add('key', `${key.class}`)
+    if (key.class) {
+      button.classList.add('key', `${key.class}`)
+    } else {
+      button.classList.add('key')
+    }
     button.textContent = key.key
     button.dataset.code = key.code
     if (key.shift) {
@@ -30,14 +34,46 @@ function createKeys(keys) {
 }
 
 // Create a function to handle pressing buttons
+
 function handleKeys(e) {
   const key = e.target.dataset.code
   const shift = e.shiftKey
-  if (key) {
-    const event = new KeyboardEvent('keydown', { code: shift ? e.target.dataset.shift.charCodeAt() : key })
+  if (key && !specialKeysCode.includes(key)) {
+    const event = new KeyboardEvent('keydown', { code: shift ? e.target.dataset.shift : e.target.textContent })
     document.dispatchEvent(event)
+    textArea.value += event.code
   }
 }
+
+// Create a function print text by presed keyboard
+document.addEventListener('keydown', printBykeyBoard)
+function printBykeyBoard(e) {
+  const key = e.code
+  const shift = e.shiftKey
+  const capslock = e.getModifierState('CapsLock')
+  const virtualKey = document.querySelector(`[data-code="${key}"]`)
+  virtualKey.classList.add('active')
+  let code
+  if (virtualKey && !specialKeysCode.includes(virtualKey.dataset.code)) {
+    if (capslock && !shift && virtualKey.textContent.match(/[a-zA-Zа-яА-Я]/)) {
+      code = virtualKey.textContent.toUpperCase()
+    } else if (!capslock && shift) {
+      code = virtualKey.dataset.shift
+    } else {
+      code = virtualKey.textContent
+    }
+    const event = new KeyboardEvent('keydown', { code })
+    document.dispatchEvent(event)
+    textArea.value += event.code
+  }
+}
+
+// Remove class active by keys
+document.addEventListener('keyup', (e) => {
+  const key = e.code
+  const virtualKey = document.querySelector(`[data-code="${key}"]`)
+  virtualKey.classList.remove('active')
+})
 
 // Add the keyboard for the page
 keyboard.appendChild(createKeys(keysEn))
@@ -82,40 +118,30 @@ function addSpace(event) {
   }
 }
 
-// Add symbos by keyboard and animation for the virtual keyboard when pressing on the physical one
-document.addEventListener('keydown', showButton)
+// Add handle for the Tab
+document.addEventListener('keydown', addTab)
 
-function showButton(event) {
-  const keyBoard = document.querySelectorAll('.keyboard__container .key')
-  keyBoard.forEach(function (element) {
-    const key = element.getAttribute('data-code')
-    if (
-      key === event.code &&
-      !key ===
-        [
-          'Delete',
-          'Backspace',
-          'Enter',
-          'ShiftLeft',
-          'ShiftRight',
-          'AltLeft',
-          'AltRight',
-          'ControlLeft',
-          'ControlRigth',
-          'CapsLock',
-          'Tab',
-          'Space',
-        ].includes(key)
-    ) {
-      element.classList.add('active')
-      console.log()
-      textArea.value += element.innerText
-    }
-    document.addEventListener('keyup', () => {
-      element.classList.remove('active')
-    })
-  })
+function addTab(event) {
+  if (event.code === 'Tab') {
+    textArea.value += '    '
+  }
 }
+
+// Add symbos by keyboard and animation for the virtual keyboard when pressing on the physical one
+const specialKeysCode = [
+  'Delete',
+  'Backspace',
+  'Enter',
+  'ShiftLeft',
+  'ShiftRight',
+  'AltLeft',
+  'AltRight',
+  'ControlLeft',
+  'ControlRigth',
+  'CapsLock',
+  'Tab',
+  'Space',
+]
 
 //Change the language
 document.addEventListener('keydown', changeLang)
