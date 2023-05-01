@@ -178,7 +178,7 @@ function changeLang(event) {
   localStorage.setItem('language', lang)
 }
 
-// Create remember language
+// Create remember language by localStorage
 const LANG_KEY = 'language'
 const DEFAULT_LANG = 'en'
 
