@@ -146,26 +146,38 @@ const specialKeysCode = [
 //Change the language
 document.addEventListener('keydown', changeLang)
 
-let control = null
-let alt = null
+let isCtrlPressed = false
+let isAltPressed = false
 let language = 'En'
 
 function changeLang(event) {
-  if (event.key === 'Control') {
-    control = event.key
-  } else if (event.key === 'Alt' && control) {
-    alt = event.key
+  if (event.code === 'ControlLeft') {
+    isCtrlPressed = true
+  }
+
+  if (event.code === 'AltLeft') {
+    isAltPressed = true
+  }
+
+  if (isCtrlPressed && isAltPressed) {
     keyboard.innerHTML = ''
     if (language === 'En') {
       keyboard.appendChild(createKeys(keysRu))
-      control = null
-      alt = null
       language = 'Ru'
     } else {
       keyboard.appendChild(createKeys(keysEn))
-      control = null
-      alt = null
       language = 'En'
     }
   }
 }
+
+// Add handle for Ctrl and Alt return false
+document.addEventListener('keyup', function (event) {
+  if (event.code === 'ControlLeft') {
+    isCtrlPressed = false
+  }
+
+  if (event.code === 'AltLeft') {
+    isAltPressed = false
+  }
+})
