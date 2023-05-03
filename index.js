@@ -106,9 +106,7 @@ document.addEventListener('click', dellBackSpace)
 
 function dellBackSpace(event) {
   if (event.type === 'keydown') {
-    if (event.key === 'Backspace') {
-      addCursor()
-    }
+    if (event.key === 'Backspace') addCursor()
   } else if (event.type === 'click') {
     if (event.target.dataset.code === 'Backspace') addCursor()
   }
@@ -121,6 +119,7 @@ function addCursor() {
     const newValue = currentValue.substring(0, cursorPosition - 1) + currentValue.substring(cursorPosition)
     textArea.value = newValue
     textArea.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
+    textArea.focus()
   }
 }
 
