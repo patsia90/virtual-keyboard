@@ -102,10 +102,25 @@ textArea.addEventListener('keydown', function (event) {
 
 // Add handle for the backspace
 document.addEventListener('keydown', dellBackSpace)
+document.addEventListener('click', dellBackSpace)
 
 function dellBackSpace(event) {
-  if (event.key === 'Backspace') {
-    textArea.value = textArea.value.slice(0, -1)
+  if (event.type === 'keydown') {
+    if (event.key === 'Backspace') {
+      addCursor()
+    }
+  } else if (event.type === 'click') {
+    if (event.target.dataset.code === 'Backspace') addCursor()
+  }
+}
+
+function addCursor() {
+  const cursorPosition = textArea.selectionStart
+  const currentValue = textArea.value
+  if (cursorPosition > 0) {
+    const newValue = currentValue.substring(0, cursorPosition - 1) + currentValue.substring(cursorPosition)
+    textArea.value = newValue
+    textArea.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
   }
 }
 
