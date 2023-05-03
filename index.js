@@ -106,9 +106,17 @@ document.addEventListener('click', dellBackSpace)
 
 function dellBackSpace(event) {
   if (event.type === 'keydown') {
-    if (event.key === 'Backspace') addCursor()
+    if (event.key === 'Backspace') {
+      addCursor()
+    } else if (event.key === 'Delete') {
+      addCursorDell()
+    }
   } else if (event.type === 'click') {
-    if (event.target.dataset.code === 'Backspace') addCursor()
+    if (event.target.dataset.code === 'Backspace') {
+      addCursor()
+    } else if (event.target.dataset.code === 'Delete') {
+      addCursorDell()
+    }
   }
 }
 
@@ -123,9 +131,21 @@ function addCursor() {
   }
 }
 
+function addCursorDell() {
+  const cursorPosition = textArea.selectionStart
+  const currentValue = textArea.value
+  if (cursorPosition > 0) {
+    const newValue = currentValue.substring(0, cursorPosition) + currentValue.substring(cursorPosition + 1)
+    textArea.value = newValue
+    textArea.setSelectionRange(cursorPosition + 1, cursorPosition)
+    textArea.focus()
+  }
+}
+
 // Add handle for the Enter
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
+    textArea.value += '\n'
   }
 })
 document.addEventListener('click', (event) => {
