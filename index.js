@@ -110,13 +110,15 @@ function dellBackSpace(event) {
 }
 
 // Add handle for the Enter
-document.addEventListener('keydown', lineBreak)
-
-function lineBreak(event) {
+document.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
+  }
+})
+document.addEventListener('click', (event) => {
+  if (event.target.dataset.code === 'Enter') {
     textArea.value += '\n'
   }
-}
+})
 
 // Add handle for the Space
 document.addEventListener('keydown', (event) => {
@@ -132,13 +134,17 @@ document.addEventListener('click', (event) => {
 })
 
 // Add handle for the Tab
-document.addEventListener('keydown', addTab)
-
-function addTab(event) {
+document.addEventListener('keydown', (event) => {
   if (event.code === 'Tab') {
     textArea.value += '    '
   }
-}
+})
+
+document.addEventListener('click', (event) => {
+  if (event.target.dataset.code === 'Tab') {
+    textArea.value += '    '
+  }
+})
 
 // Add symbos by keyboard and animation for the virtual keyboard when pressing on the physical one
 const specialKeysCode = [
