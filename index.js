@@ -75,7 +75,9 @@ function printBykeyBoard(key, shift, capslock) {
     document.dispatchEvent(event)
     virtualKey.classList.add('active')
     textArea.value += event.code
-  } else virtualKey.classList.add('active')
+  } else if (virtualKey && specialKeysCode.includes(virtualKey.dataset.code)) {
+    virtualKey.classList.add('active')
+  }
 }
 
 // Remove class active by keys
@@ -117,13 +119,17 @@ function lineBreak(event) {
 }
 
 // Add handle for the Space
-document.addEventListener('keydown', addSpace)
-
-function addSpace(event) {
+document.addEventListener('keydown', (event) => {
   if (event.code === 'Space') {
     textArea.value += ' '
   }
-}
+})
+
+document.addEventListener('click', (event) => {
+  if (event.target.dataset.code === 'Space') {
+    textArea.value += ' '
+  }
+})
 
 // Add handle for the Tab
 document.addEventListener('keydown', addTab)
