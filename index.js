@@ -75,7 +75,7 @@ function printBykeyBoard(key, shift, capslock) {
     document.dispatchEvent(event)
     virtualKey.classList.add('active')
     textArea.value += event.code
-  }
+  } else virtualKey.classList.add('active')
 }
 
 // Remove class active by keys
